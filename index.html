@@ -1,0 +1,349 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>PREVENTS Lab | 運動器未来共創研究室</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Zen+Old+Mincho:wght@400;600;700&family=Zen+Kaku+Gothic+New:wght@300;400;500;700&family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet">
+<style>
+  :root{
+    --paper:#F3F5F6;
+    --paper-deep:#EAEDEF;
+    --ink:#14212C;
+    --teal:#0D7A82;
+    --teal-dark:#0A5F66;
+    --steel:#4A6072;
+    --line:#D7DEE2;
+    --amber:#C97C33;
+    --serif: 'Zen Old Mincho', serif;
+    --sans: 'Zen Kaku Gothic New', sans-serif;
+    --mono: 'JetBrains Mono', monospace;
+  }
+  *{box-sizing:border-box; margin:0; padding:0;}
+  html{scroll-behavior:smooth;}
+  body{
+    background:var(--paper);
+    color:var(--ink);
+    font-family:var(--sans);
+    line-height:1.9;
+    -webkit-font-smoothing:antialiased;
+    overflow-x:hidden;
+  }
+  a{color:inherit;}
+  .wrap{max-width:1080px; margin:0 auto; padding:0 32px;}
+
+  /* ---------- Nav ---------- */
+  header.nav{
+    position:fixed; top:0; left:0; right:0; z-index:50;
+    background:rgba(243,245,246,0.88);
+    backdrop-filter:blur(8px);
+    border-bottom:1px solid var(--line);
+  }
+  .nav-inner{
+    max-width:1080px; margin:0 auto; padding:16px 32px;
+    display:flex; align-items:center; justify-content:space-between;
+  }
+  .nav-mark{
+    font-family:var(--mono); font-size:13px; letter-spacing:0.12em;
+    color:var(--teal-dark); font-weight:500;
+  }
+  .nav-links{display:flex; gap:28px; font-size:14px; color:var(--steel);}
+  .nav-links a{text-decoration:none; transition:color .2s;}
+  .nav-links a:hover{color:var(--teal-dark);}
+  @media (max-width:640px){ .nav-links{gap:16px; font-size:12.5px;} }
+
+  /* ---------- Hero ---------- */
+  .hero{
+    position:relative;
+    min-height:100svh;
+    display:flex; flex-direction:column; justify-content:center;
+    padding:120px 32px 80px;
+    overflow:hidden;
+  }
+  .hero-inner{max-width:1080px; margin:0 auto; width:100%; position:relative; z-index:2;}
+  .eyebrow{
+    font-family:var(--mono); font-size:12.5px; letter-spacing:0.18em;
+    color:var(--teal-dark); text-transform:uppercase; margin-bottom:22px;
+    display:flex; align-items:center; gap:10px;
+  }
+  .eyebrow::before{
+    content:''; width:22px; height:1px; background:var(--teal);
+  }
+  h1.title{
+    font-family:var(--serif); font-weight:700;
+    font-size:clamp(34px, 6vw, 64px);
+    line-height:1.4;
+    letter-spacing:0.02em;
+    color:var(--ink);
+  }
+  h1.title .en{
+    display:block; font-family:var(--mono); font-weight:500;
+    font-size:clamp(13px, 1.6vw, 16px); letter-spacing:0.22em;
+    color:var(--steel); margin-top:18px; text-transform:uppercase;
+  }
+  .hero-lead{
+    max-width:560px; margin-top:32px; font-size:16px; color:var(--steel);
+    font-weight:300; line-height:2;
+  }
+  .hero-affil{
+    margin-top:40px; font-size:13.5px; color:var(--steel);
+    border-left:2px solid var(--teal); padding-left:14px;
+  }
+
+  /* Echo pulse canvas line */
+  .echo-line{
+    position:absolute; left:0; right:0; bottom:0; height:180px;
+    z-index:1; opacity:0.9;
+  }
+  .echo-line svg{width:100%; height:100%; display:block;}
+  .echo-path{
+    fill:none; stroke:var(--teal); stroke-width:1.4;
+    stroke-dasharray:6 2000;
+    animation: sweep 5.5s ease-in-out infinite;
+  }
+  .echo-path.second{ stroke:var(--steel); opacity:0.45; animation-delay:.6s; }
+  @keyframes sweep{
+    0%{ stroke-dashoffset:2000; }
+    55%{ stroke-dashoffset:0; }
+    100%{ stroke-dashoffset:-2000; }
+  }
+  @media (prefers-reduced-motion: reduce){
+    .echo-path{ animation:none; stroke-dasharray:none; }
+  }
+
+  /* ---------- Section shared ---------- */
+  section{padding:110px 32px;}
+  .section-head{max-width:640px; margin-bottom:64px;}
+  .section-num{
+    font-family:var(--mono); font-size:12px; letter-spacing:0.16em;
+    color:var(--teal-dark); text-transform:uppercase; margin-bottom:14px;
+  }
+  h2{
+    font-family:var(--serif); font-weight:600;
+    font-size:clamp(24px, 3.4vw, 34px);
+    line-height:1.6;
+  }
+  .section-sub{margin-top:16px; color:var(--steel); font-weight:300; font-size:15.5px;}
+
+  /* ---------- Mission ---------- */
+  .mission{background:var(--paper-deep); border-top:1px solid var(--line); border-bottom:1px solid var(--line);}
+  .mission-text{
+    font-family:var(--serif); font-size:clamp(19px,2.4vw,25px);
+    line-height:2.05; max-width:760px; color:var(--ink);
+  }
+  .mission-text .mark{color:var(--teal-dark);}
+
+  /* ---------- Triad (見る/測る/防ぐ) ---------- */
+  .triad{position:relative;}
+  .triad-line{
+    position:absolute; top:56px; left:0; right:0; height:1px;
+    background:repeating-linear-gradient(90deg, var(--line) 0 8px, transparent 8px 14px);
+    z-index:0; display:none;
+  }
+  @media(min-width:860px){ .triad-line{display:block;} }
+  .triad-grid{
+    display:grid; grid-template-columns:repeat(3,1fr); gap:36px; position:relative; z-index:1;
+  }
+  @media(max-width:860px){ .triad-grid{grid-template-columns:1fr; gap:44px;} }
+  .triad-card{
+    background:var(--paper); border:1px solid var(--line); border-radius:2px;
+    padding:36px 28px; position:relative;
+    transition:transform .3s ease, box-shadow .3s ease;
+  }
+  .triad-card:hover{ transform:translateY(-4px); box-shadow:0 18px 40px -24px rgba(20,33,44,0.35); }
+  .triad-kanji{
+    font-family:var(--serif); font-size:40px; font-weight:700; color:var(--teal-dark);
+    line-height:1; margin-bottom:6px;
+  }
+  .triad-jp{
+    font-family:var(--mono); font-size:11px; letter-spacing:0.14em; color:var(--steel);
+    text-transform:uppercase; margin-bottom:20px; display:block;
+  }
+  .triad-card h3{
+    font-family:var(--sans); font-weight:700; font-size:16.5px; margin-bottom:12px;
+  }
+  .triad-card p{ font-size:14.5px; color:var(--steel); font-weight:300; line-height:1.95; }
+  .triad-dot{
+    position:absolute; top:-6px; left:28px; width:11px; height:11px;
+    border-radius:50%; background:var(--paper); border:2px solid var(--teal);
+    display:none;
+  }
+  @media(min-width:860px){ .triad-dot{display:block;} }
+
+  /* ---------- Approach strip ---------- */
+  .approach{background:var(--ink); color:var(--paper);}
+  .approach h2{color:var(--paper);}
+  .approach .section-sub{color:#B9C4CC;}
+  .approach-grid{display:grid; grid-template-columns:1fr 1fr; gap:52px; align-items:start;}
+  @media(max-width:780px){ .approach-grid{grid-template-columns:1fr;} }
+  .approach-list{list-style:none;}
+  .approach-list li{
+    padding:18px 0; border-bottom:1px solid rgba(255,255,255,0.12);
+    font-size:14.5px; color:#D7DEE2; font-weight:300;
+    display:flex; gap:16px;
+  }
+  .approach-list li span.tag{
+    font-family:var(--mono); font-size:11px; color:var(--amber); flex-shrink:0; padding-top:2px;
+  }
+
+  /* ---------- Footer / affiliation ---------- */
+  footer{
+    background:var(--paper-deep); border-top:1px solid var(--line);
+    padding:56px 32px 40px;
+  }
+  .footer-inner{
+    max-width:1080px; margin:0 auto;
+    display:flex; flex-wrap:wrap; justify-content:space-between; gap:32px;
+  }
+  .footer-block .label{
+    font-family:var(--mono); font-size:11px; letter-spacing:0.12em; color:var(--teal-dark);
+    text-transform:uppercase; margin-bottom:10px;
+  }
+  .footer-block div.val{font-size:14px; color:var(--ink); font-weight:400;}
+  .footer-bottom{
+    max-width:1080px; margin:40px auto 0; padding-top:24px; border-top:1px solid var(--line);
+    font-size:12px; color:var(--steel); font-family:var(--mono);
+  }
+
+  .fade-up{opacity:0; transform:translateY(18px); transition:opacity .7s ease, transform .7s ease;}
+  .fade-up.in{opacity:1; transform:none;}
+</style>
+</head>
+<body>
+
+<header class="nav">
+  <div class="nav-inner">
+    <div class="nav-mark">PREVENTS LAB</div>
+    <nav class="nav-links">
+      <a href="#mission">研究室について</a>
+      <a href="#research">研究テーマ</a>
+      <a href="#approach">アプローチ</a>
+      <a href="publications.html">業績</a>
+      <a href="#access">アクセス</a>
+    </nav>
+  </div>
+</header>
+
+<section class="hero">
+  <div class="hero-inner">
+    <div class="eyebrow">Musculoskeletal Futures Co-Creation Lab</div>
+    <h1 class="title">
+      運動器未来共創研究室
+      <span class="en">PREVENTS Lab</span>
+    </h1>
+    <p class="hero-lead">
+      超音波エコーをはじめとする医療画像とバイオメカニクスによる非侵襲的評価を軸に、運動器疾患・スポーツ障害に対する理学療法と予防のあり方を探究しています。
+    </p>
+    <div class="hero-affil">
+      森ノ宮医療大学 総合リハビリテーション学部 理学療法学科
+    </div>
+  </div>
+
+  <div class="echo-line" aria-hidden="true">
+    <svg viewBox="0 0 1200 180" preserveAspectRatio="none">
+      <path class="echo-path" d="M0,120 L120,120 L140,60 L160,150 L180,120 L340,120 L360,90 L380,130 L400,120 L620,120 L640,40 L665,160 L690,120 L900,120 L920,80 L940,120 L1200,120"/>
+      <path class="echo-path second" d="M0,140 L200,140 L220,110 L240,150 L260,140 L520,140 L540,100 L560,140 L1200,140"/>
+    </svg>
+  </div>
+</section>
+
+<section class="mission" id="mission">
+  <div class="wrap fade-up">
+    <div class="section-num">Mission</div>
+    <p class="mission-text">
+      痛みや障害が<span class="mark">起きてから</span>対処するのではなく、<span class="mark">起きる前</span>に兆候をとらえる。
+      からだに負担をかけない画像評価と動作解析を積み重ね、運動器疾患・スポーツ障害を未然に防ぐ理学療法を、臨床現場と共につくっていきます。
+    </p>
+  </div>
+</section>
+
+<section class="triad" id="research">
+  <div class="wrap">
+    <div class="section-head fade-up">
+      <div class="section-num">Research Themes</div>
+      <h2>見る、測る、防ぐ。<br>非侵襲的評価から拓く理学療法</h2>
+      <p class="section-sub">3つの視点を組み合わせながら、運動器疾患・スポーツ障害の予防と理学療法の革新に取り組んでいます。</p>
+    </div>
+
+    <div class="triad-line" aria-hidden="true"></div>
+    <div class="triad-grid">
+      <div class="triad-card fade-up">
+        <span class="triad-dot" aria-hidden="true"></span>
+        <div class="triad-kanji">見る</div>
+        <span class="triad-jp">Imaging Evaluation</span>
+        <h3>超音波エコーによる医療画像評価</h3>
+        <p>筋・腱・靭帯など運動器の組織を、からだへの負担なく可視化。超音波エコーをはじめとした医療画像から、コンディションや障害リスクの手がかりを読み解きます。</p>
+      </div>
+      <div class="triad-card fade-up">
+        <span class="triad-dot" aria-hidden="true"></span>
+        <div class="triad-kanji">測る</div>
+        <span class="triad-jp">Biomechanical Analysis</span>
+        <h3>バイオメカニクスによる動作分析</h3>
+        <p>動作解析やセンサーを用いた非侵襲的な計測により、身体機能や動きの特徴を定量的にとらえ、障害発生につながる要因を明らかにします。</p>
+      </div>
+      <div class="triad-card fade-up">
+        <span class="triad-dot" aria-hidden="true"></span>
+        <div class="triad-kanji">防ぐ</div>
+        <span class="triad-jp">Preventive Physical Therapy</span>
+        <h3>予防的理学療法の開発</h3>
+        <p>画像評価と動作分析で得られた知見を統合し、運動器疾患・スポーツ障害の発生そのものを未然に防ぐ、革新的な理学療法プログラムの構築を目指します。</p>
+      </div>
+    </div>
+  </div>
+</section>
+
+<section class="approach" id="approach">
+  <div class="wrap">
+    <div class="section-head fade-up">
+      <div class="section-num" style="color:#6FD1C9;">Approach</div>
+      <h2>非侵襲的評価にこだわる理由</h2>
+      <p class="section-sub">からだへの負担が少ない評価だからこそ、現場で、継続して、多くの人に使える。</p>
+    </div>
+    <div class="approach-grid fade-up">
+      <ul class="approach-list">
+        <li><span class="tag">01</span>痛みを伴わず繰り返し評価できるため、経過や変化を追跡しやすい</li>
+        <li><span class="tag">02</span>臨床現場や競技現場に近い環境でも実施しやすい</li>
+        <li><span class="tag">03</span>画像・動作データを組み合わせ、多角的に運動器の状態を捉える</li>
+      </ul>
+      <ul class="approach-list">
+        <li><span class="tag">04</span>評価にとどまらず、理学療法プログラムの開発へとつなげる</li>
+        <li><span class="tag">05</span>予防の視点から、発症後の治療とは異なるアプローチを追究する</li>
+        <li><span class="tag">06</span>理学療法学科の教育・臨床実践と連動した研究を行う</li>
+      </ul>
+    </div>
+  </div>
+</section>
+
+<footer id="access">
+  <div class="footer-inner">
+    <div class="footer-block">
+      <div class="label">Laboratory</div>
+      <div class="val">運動器未来共創研究室（PREVENTS Lab）</div>
+    </div>
+    <div class="footer-block">
+      <div class="label">Affiliation</div>
+      <div class="val">森ノ宮医療大学 総合リハビリテーション学部 理学療法学科</div>
+    </div>
+    <div class="footer-block">
+      <div class="label">Focus</div>
+      <div class="val">運動器疾患・スポーツ障害の理学療法と予防</div>
+    </div>
+  </div>
+  <div class="footer-bottom wrap">
+    © PREVENTS Lab, Dept. of Physical Therapy, Morinomiya University of Medical Sciences
+  </div>
+</footer>
+
+<script>
+  const observer = new IntersectionObserver((entries)=>{
+    entries.forEach(e=>{
+      if(e.isIntersecting){ e.target.classList.add('in'); }
+    });
+  }, {threshold:0.15});
+  document.querySelectorAll('.fade-up').forEach(el=>observer.observe(el));
+</script>
+
+</body>
+</html>
